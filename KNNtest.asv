@@ -1,0 +1,17 @@
+load digits
+X=learn.P';
+Y=learn.T';
+for i=1:10
+    MdlEucl = fitcknn(X,Y,'NumNeighbors',i,'Standardize',1)
+    cvemodel = crossval(MdlEucl)
+    cvemdlloss = kfoldLoss(cvemodel)
+    labelEucl = predict(MdlEucl,test.P');
+    fold=test.T';
+    count=0;
+    for i=1:1797
+       if(labelEucl(i)==fold(i))
+           count=count+1;  
+       end
+    end
+    div=count/1797
+end
